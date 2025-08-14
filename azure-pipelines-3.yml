@@ -1,0 +1,16 @@
+# Define parameters for the pipeline
+parameters:
+  # Specify a parameter for the build configuration
+  - name: buildConfiguration
+    type: string
+    default: 'Release'
+
+# List the steps for the pipeline
+steps:
+  # Add a task to run the .NET Core CLI
+  - task: DotNetCoreCLI@2
+    inputs:
+      # Set the command to 'build'
+      command: 'build'
+      # Pass the build configuration as an argument
+      arguments: '--configuration $(buildConfiguration)'
