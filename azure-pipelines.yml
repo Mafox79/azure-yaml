@@ -1,19 +1,35 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
 
-trigger:
-- adding-review-test-link
+jobs:
+  # Define the first build job
+  - job: BuildJob1
+    displayName: 'Build Job 1'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      # Add a script step to print a message for Building Project A
+      - script: echo "Building Project A"
+        displayName: 'Build Project A'
 
-pool:
-  vmImage: ubuntu-latest
+  # Define the second build job
+  - job: BuildJob2
+    displayName: 'Build Job 2'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      # Add a script step to print a message for Building Project B
+      - script: echo "Building Project B"
+        displayName: 'Build Project B'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+  # Define the test job
+  - job: TestJob
+    displayName: 'Run Tests'
+    # Specify that this job depends on the completion of BuildJob1 and BuildJob2
+    dependsOn: 
+      - BuildJob1
+      - BuildJob2
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      # Add a script step to print a message for Running Tests
+      - script: echo "Running Tests"
+        displayName: 'Run Tests'
