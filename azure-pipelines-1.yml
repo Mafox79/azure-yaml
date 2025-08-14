@@ -1,0 +1,34 @@
+jobs:
+  # Define the first build job
+  - job: BuildJob1
+    displayName: 'Build Job 1'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      # Add a script step to print a message for Building Project A
+      - script: echo "Building Project A"
+        displayName: 'Build Project A'
+
+  # Define the second build job
+  - job: BuildJob2
+    displayName: 'Build Job 2'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      # Add a script step to print a message for Building Project B
+      - script: echo "Building Project B"
+        displayName: 'Build Project B'
+
+  # Define the test job
+  - job: TestJob
+    displayName: 'Run Tests'
+    # Specify that this job depends on the completion of BuildJob1 and BuildJob2
+    dependsOn: 
+      - BuildJob1
+      - BuildJob2
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      # Add a script step to print a message for Running Tests
+      - script: echo "Running Tests"
+        displayName: 'Run Tests'
